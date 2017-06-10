@@ -32,11 +32,17 @@ import { Component, Input, Output, EventEmitter } from '@angular/core'
 export class EventThumbnailComponent {
   @Input() event:any;  // data comes passed from parent: [event]="event1" or whatever
   @Output() eventCLick = new EventEmitter();
+  someProperty: any = 'some string';
 
   handleClickMe(){
     console.log('clicked')
     this.eventCLick.emit(this.event.name)
   }
+
+  logFoo(){
+      console.log('foo')
+  }
+
   getStartTimeStyle() {
     if (this.event && this.event.time === '8:00 am')
       return {color: '#003300', 'font-weight': 'bold'}
