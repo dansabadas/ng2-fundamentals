@@ -23,4 +23,8 @@ export class EventsListComponent implements OnInit {
         country: 'England'
       }
     }
+
+    handleEventClicked(data){
+        console.log('received: ', data);
+    }
 }
