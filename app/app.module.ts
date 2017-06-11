@@ -26,7 +26,7 @@ import { appRoutes} from './routes'
         EventService, 
         ToastrService, 
         EventRouteActivator,
-        EventsListResolver
+        EventsListResolver,
         { 
             provide: 'canDeactivateCreateEvent', 
             useValue: checkDirtyState 
