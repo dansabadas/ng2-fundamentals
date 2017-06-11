@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 
-declare let toastr:any
+declare let toastr:any  // this way we declare toastr is on the global scope
 
 @Injectable()
 export class ToastrService {
