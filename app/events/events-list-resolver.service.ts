@@ -9,6 +9,6 @@ export class EventsListResolver implements Resolve<any> {
   }
 
   resolve() {
-    return this.eventService.getEvents().map(events => events)
+    return this.eventService.getEvents().map(events => events)  // pre-loads data for our route with this resolve
   }
 }

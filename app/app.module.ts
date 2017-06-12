@@ -2,16 +2,19 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, ActivatedRouteSnapshot } from '@angular/router';
 
-import { EventsAppComponent } from './events-app.component';
-import { EventsListComponent } from './events/events-list.component';
-import { EventThumbnailComponent } from './events/event-thumbnail.component';
-import { EventDetailsComponent } from './events/event-details/event-details.component';
-import { CreateEventComponent } from './events/create-event.component';
-import { NavBarComponent } from './nav/navbar.component';
+import {
+    EventsListComponent,
+    EventThumbnailComponent,
+    EventDetailsComponent,
+    CreateEventComponent,
+    EventRouteActivator,
+    EventService,
+    EventsListResolver
+} from './events/index';
+
 import { Error404Component } from './errors/404.component'
-import { EventRouteActivator } from './events/event-details/event-route-activator.service';
-import { EventService } from './events/shared/event.service'
-import { EventsListResolver } from './events/events-list-resolver.service'
+import { EventsAppComponent } from './events-app.component';
+import { NavBarComponent } from './nav/navbar.component';
 import { ToastrService } from './common/toastr.service'
 import { appRoutes} from './routes'
 
@@ -21,16 +24,22 @@ import { appRoutes} from './routes'
         RouterModule.forRoot(appRoutes)
     ],
     exports: [],
-    declarations: [EventsListComponent, EventsAppComponent, EventThumbnailComponent, NavBarComponent, EventDetailsComponent, CreateEventComponent, Error404Component],
+    declarations: [
+        EventsListComponent, 
+        EventsAppComponent, 
+        EventThumbnailComponent, 
+        NavBarComponent, 
+        EventDetailsComponent, 
+        CreateEventComponent, 
+        Error404Component
+    ],
     providers: [
         EventService, 
         ToastrService, 
         EventRouteActivator,
         EventsListResolver,
-        { 
-            provide: 'canDeactivateCreateEvent', 
-            useValue: checkDirtyState 
-        }
+        { provide: 'canDeactivateCreateEvent', useValue: checkDirtyState },
+        //{ provide: 'canDeactivateClickThumbnail', useValue: false }
     ],
     bootstrap:[EventsAppComponent]
 })
