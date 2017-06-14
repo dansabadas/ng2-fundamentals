@@ -17,6 +17,7 @@ export class EventDetailsComponent {
 
   }
   ngOnInit() {
+    console.log(+this.route.snapshot.params['id'])
     this.event = this.eventService.getEvent(+this.route.snapshot.params['id'])
     //this.event = this.eventService.getEvent(1)
   }
