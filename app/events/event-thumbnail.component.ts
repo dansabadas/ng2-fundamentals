@@ -5,8 +5,8 @@ import { IEvent } from './shared/index'
   selector: 'event-thumbnail',
   template: `
     <div [routerLink]="['/events', event.id]" class="well hoverwell thumbnail">
-      <h2>{{event?.name}}</h2>
-      <div>Date: {{event?.date}}</div>
+      <h2>{{event?.name | uppercase}}</h2>
+      <div>Date: {{event?.date | date:'shortDate'}}</div>
       <!--[ngStyle]="getStartTimeStyle()" /* this is the best way */-->
       <div 
         [class.green]="event?.time === '8:00 am'" 
@@ -18,7 +18,7 @@ import { IEvent } from './shared/index'
         <span *ngSwitchCase="'10:00 am'">(Late Start)</span>
         <span *ngSwitchDefault>(Normal Start)</span>
       </div>
-      <div>Price: \${{event?.price}}</div>
+      <div>Price: {{event?.price | currency:'USD':true}}</div>
       <!--*ngIf or [hidden] but => better use the structural directive ngIf-->
       <div [hidden]="event?.location">
         <span>Location: {{event?.location?.address}}</span>

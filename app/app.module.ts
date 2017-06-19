@@ -12,7 +12,8 @@ import {
     EventService,
     EventsListResolver,
     CreateSessionComponent,
-    SessionListComponent
+    SessionListComponent,
+    DurationPipe
 } from './events/index';
 
 import { Error404Component } from './errors/404.component'
@@ -39,7 +40,8 @@ import { AuthService } from './user/auth.service'
         CreateEventComponent, 
         Error404Component,
         CreateSessionComponent,
-        SessionListComponent
+        SessionListComponent,
+        DurationPipe
     ],
     providers: [
         EventService, 
