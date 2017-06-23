@@ -19,10 +19,12 @@ import {
 import { Error404Component } from './errors/404.component'
 import { EventsAppComponent } from './events-app.component';
 import { NavBarComponent } from './nav/navbar.component';
-import { ToastrService } from './common/toastr.service'
+import { TOASTR_TOKEN, Toastr } from './common/toastr.service'
 import { CollapsibleWellComponent } from './common/collapsible-well.component'
 import { appRoutes} from './routes'
 import { AuthService } from './user/auth.service'
+
+declare let toastr:Toastr  // this way we declare toastr is on the global scope
 
 @NgModule({
     imports: [
@@ -47,7 +49,7 @@ import { AuthService } from './user/auth.service'
     ],
     providers: [
         EventService, 
-        ToastrService, 
+       { provide: TOASTR_TOKEN, useValue: toastr },
         EventRouteActivator,
         EventsListResolver,
         { provide: 'canDeactivateCreateEvent', useValue: checkDirtyState },
