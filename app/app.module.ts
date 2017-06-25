@@ -22,7 +22,7 @@ import {
     Toastr,
     CollapsibleWellComponent,
     SimpleModalComponent,
-//   ModalTriggerDirective 
+    ModalTriggerDirective 
 } from './common/index';
 
 import { Error404Component } from './errors/404.component'
@@ -54,7 +54,8 @@ declare let jQuery : Object;
         SessionListComponent,
         DurationPipe,
         CollapsibleWellComponent,
-        SimpleModalComponent
+        SimpleModalComponent,
+        ModalTriggerDirective
     ],
     providers: [
         EventService, 
