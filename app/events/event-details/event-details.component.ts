@@ -1,5 +1,5 @@
 import { Component } from '@angular/core'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Params } from '@angular/router'
 import { IEvent, ISession, EventService } from '../shared/index'
 
 @Component({
@@ -37,7 +37,15 @@ export class EventDetailsComponent {
 
   ngOnInit() {
     console.log(+this.route.snapshot.params['id'])
-    this.event = this.eventService.getEvent(+this.route.snapshot.params['id'])
     //this.event = this.eventService.getEvent(1)
+    //this.event = this.eventService.getEvent(+this.route.snapshot.params['id'])
+
+    // the snapshot logic above is not good anymore because it is not observable!
+    // in the handler below we ned to reset all state of the component we are interested in to be reset!
+    // we are routing the component to itself.
+    this.route.params.forEach((params: Params) => {
+      this.event = this.eventService.getEvent(+params['id']);
+      this.addMode = false;
+    })
   }
 }
