@@ -44,8 +44,10 @@ export class EventDetailsComponent {
     // in the handler below we ned to reset all state of the component we are interested in to be reset!
     // we are routing the component to itself.
     this.route.params.forEach((params: Params) => {
-      this.event = this.eventService.getEvent(+params['id']);
-      this.addMode = false;
-    })
+      this.eventService.getEvent(+params['id']).subscribe((event:IEvent)=>{
+        this.event = event;
+        this.addMode = false;
+      });
+    });
   }
 }

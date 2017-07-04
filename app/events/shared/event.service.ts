@@ -11,15 +11,6 @@ export class EventService {
   constructor(private http: Http) {}
 
   getEvents() : Observable<IEvent[]> {
-    //return EVENTS;
-    // let subject = new Subject<IEvent[]>();
-    // setTimeout(() => {
-    //     subject.next(EVENTS); 
-    //     subject.complete(); 
-    // }, 1000);
-
-    // return subject;
-
     // this .get call won't happen unless someone subscribed to the observable!
     return this.http.get("/api/events").map((response: Response) => {
         return <IEvent[]>response.json(); // this is the magic of forcing typing: any => IEvent[]
@@ -27,15 +18,6 @@ export class EventService {
   }
  
   getEvent(id:number) : Observable<IEvent> {
-    //return EVENTS.find(event => event.id === id)
-
-    // let subject = new Subject();
-    // setTimeout(() => {
-    //     subject.next(EVENTS.find(event => event.id === id)); 
-    //     subject.complete(); 
-    // }, 100);
-    // return subject;
-
     return this.http.get("/api/events/" + id).map((response: Response) => {
         return <IEvent>response.json();
     }).catch(this.handleError);
