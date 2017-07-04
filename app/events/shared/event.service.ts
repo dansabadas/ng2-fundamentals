@@ -3,7 +3,7 @@ import { Subject, Observable } from 'rxjs/RX'
 
 import { IEvent } from './event.model'
 import { ISession } from './session.model'
-import { Http, Response } from '@angular/http'
+import { Http, Response, Headers, RequestOptions } from '@angular/http'
 
 @Injectable()   // this Injectable decorator is not really required
 export class EventService {
@@ -23,36 +23,20 @@ export class EventService {
     }).catch(this.handleError);
   }
 
-  saveEvent(event) {
-    event.id = 999
-    event.session = []
-    EVENTS.push(event)
+  saveEvent(event): Observable<IEvent> {
+    let headers = new Headers({ 'Content-Type': 'application/json'});
+    let options = new RequestOptions({headers: headers});
+
+// it seems in latest version of Angular we don't need JSON.stringify(event) as the js object passed aka 'event' will automatically be stringified
+    return this.http.post('/api/events', JSON.stringify(event), options).map((response: Response) => {
+      return response.json();
+    }).catch(this.handleError);
   }
 
-  updateEvent(event) {
-    let index = EVENTS.findIndex(x => x.id = event.id)
-    EVENTS[index] = event
-  }
-
-  searchSessions(searchTerm: string) : EventEmitter<any> {
-    var term = searchTerm.toLocaleLowerCase();
-    var results: ISession[] = [];
-
-    EVENTS.forEach(event => {
-      var matchingSessions = event.sessions.filter(session => session.name.toLocaleLowerCase().indexOf(term) > -1);
-      matchingSessions = matchingSessions.map((session:any) => {
-        session.eventId = event.id;
-        return session;
-      });
-      results = results.concat(matchingSessions);
-    })
-
-    var emitter = new EventEmitter(true); // 'true' argument means deliver this event async
-    setTimeout(() => {  // we put set-timeout to simulate http call
-      emitter.emit(results);
-    }, 100);
-
-    return emitter;
+  searchSessions(searchTerm: string) {
+    return this.http.get("/api/sessions/search?search=" + searchTerm).map((response: Response) => {
+        return response.json();
+    }).catch(this.handleError);
   }
 
     private handleError(error: Response) {

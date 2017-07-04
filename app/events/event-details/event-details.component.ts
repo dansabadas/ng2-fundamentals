@@ -27,8 +27,8 @@ export class EventDetailsComponent {
     const nextId =  Math.max.apply(null, this.event.sessions.map(s => s.id));
     session.id = nextId + 1
     this.event.sessions.push(session);
-    this.eventService.updateEvent(this.event)
-    this.addMode = false
+    this.eventService.saveEvent(this.event).subscribe();// we need to subscribe to make the call happen!
+    this.addMode = false  // here we are optimistic not putting it in the callback handler!
   }
 
   cancelAddSessionHandler() {
@@ -36,19 +36,8 @@ export class EventDetailsComponent {
   }
 
   ngOnInit() {
-    //console.log(+this.route.snapshot.params['id'])
-    //this.event = this.eventService.getEvent(1)
-    //this.event = this.eventService.getEvent(+this.route.snapshot.params['id'])
-
-    // the snapshot logic above is not good anymore because it is not observable!
-    // in the handler below we ned to reset all state of the component we are interested in to be reset!
-    // we are routing the component to itself.
-    this.route.params.forEach((params: Params) => {
-      // this.eventService.getEvent(+params['id']).subscribe((event:IEvent)=>{
-      //   this.event = event;
-      //   this.addMode = false;
-      // });
-        this.event = this.route.snapshot.data['event'];
+    this.route.data.forEach((data) => {
+        this.event = data['event'];
         this.addMode = false;
     });
   }
