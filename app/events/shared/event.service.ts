@@ -3,28 +3,42 @@ import { Subject, Observable } from 'rxjs/RX'
 
 import { IEvent } from './event.model'
 import { ISession } from './session.model'
+import { Http, Response } from '@angular/http'
 
 @Injectable()   // this Injectable decorator is not really required
 export class EventService {
+
+  constructor(private http: Http) {}
+
   getEvents() : Observable<IEvent[]> {
     //return EVENTS;
-    let subject = new Subject<IEvent[]>();
-    setTimeout(() => {
-        subject.next(EVENTS); 
-        subject.complete(); 
-    }, 1000);
+    // let subject = new Subject<IEvent[]>();
+    // setTimeout(() => {
+    //     subject.next(EVENTS); 
+    //     subject.complete(); 
+    // }, 1000);
 
-    return subject;
+    // return subject;
+
+    // this .get call won't happen unless someone subscribed to the observable!
+    return this.http.get("/api/events").map((response: Response) => {
+        return <IEvent[]>response.json(); // this is the magic of forcing typing: any => IEvent[]
+    }).catch(this.handleError);
   }
+ 
+  getEvent(id:number) : Observable<IEvent> {
+    //return EVENTS.find(event => event.id === id)
 
-  getEvent(id:number) : IEvent {
-    return EVENTS.find(event => event.id === id)
     // let subject = new Subject();
     // setTimeout(() => {
     //     subject.next(EVENTS.find(event => event.id === id)); 
     //     subject.complete(); 
     // }, 100);
     // return subject;
+
+    return this.http.get("/api/events/" + id).map((response: Response) => {
+        return <IEvent>response.json();
+    }).catch(this.handleError);
   }
 
   saveEvent(event) {
@@ -57,6 +71,10 @@ export class EventService {
     }, 100);
 
     return emitter;
+  }
+
+    private handleError(error: Response) {
+      return Observable.throw(error.statusText);
   }
 }
 
