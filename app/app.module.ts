@@ -9,9 +9,9 @@ import {
     EventThumbnailComponent,
     EventDetailsComponent,
     CreateEventComponent,
-    EventRouteActivator,
     EventService,
     EventsListResolver,
+    EventResolver,
     CreateSessionComponent,
     SessionListComponent,
     DurationPipe,
@@ -36,7 +36,7 @@ import { appRoutes} from './routes'
 import { AuthService } from './user/auth.service'
 
 declare let toastr : Toastr;  // this way we declare toastr is on the global scope
-declare let jQuery : Object;
+declare let jQuery : Object; 
 
 @NgModule({
     imports: [
@@ -68,8 +68,8 @@ declare let jQuery : Object;
         EventService, 
        { provide: TOASTR_TOKEN, useValue: toastr },
        { provide: JQ_TOKEN, useValue: jQuery },
-        EventRouteActivator,
         EventsListResolver,
+        EventResolver,
         { provide: 'canDeactivateCreateEvent', useValue: checkDirtyState },
         AuthService,
         VoterService

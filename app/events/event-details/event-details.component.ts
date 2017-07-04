@@ -36,7 +36,7 @@ export class EventDetailsComponent {
   }
 
   ngOnInit() {
-    console.log(+this.route.snapshot.params['id'])
+    //console.log(+this.route.snapshot.params['id'])
     //this.event = this.eventService.getEvent(1)
     //this.event = this.eventService.getEvent(+this.route.snapshot.params['id'])
 
@@ -44,10 +44,12 @@ export class EventDetailsComponent {
     // in the handler below we ned to reset all state of the component we are interested in to be reset!
     // we are routing the component to itself.
     this.route.params.forEach((params: Params) => {
-      this.eventService.getEvent(+params['id']).subscribe((event:IEvent)=>{
-        this.event = event;
+      // this.eventService.getEvent(+params['id']).subscribe((event:IEvent)=>{
+      //   this.event = event;
+      //   this.addMode = false;
+      // });
+        this.event = this.route.snapshot.data['event'];
         this.addMode = false;
-      });
     });
   }
 }
