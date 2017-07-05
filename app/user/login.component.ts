@@ -9,15 +9,22 @@ import { Router } from '@angular/router'
   `]
 })
 export class LoginComponent {
+  loginInvalid = false;
+
   constructor(private authService:AuthService, private router:Router) {
 
   }
 
-  login(formValues) {
-    console.log(formValues);
-    this.authService.loginUser(formValues.userName, formValues.password)    // this type of grabbing HTML values is specific to template-based forms
-    this.router.navigate(['events'])
-  }
+  login(formValues) { 
+    this.authService.loginUser(formValues.userName, formValues.password).subscribe(resp => {
+      if(!resp) {
+        this.loginInvalid = true;
+      } else {
+        this.router.navigate(['events'])
+      }
+    })
+    
+  } 
 
   cancel() {
     this.router.navigate(['events'])
