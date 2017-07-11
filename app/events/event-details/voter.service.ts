@@ -11,7 +11,10 @@ export class VoterService {
   deleteVoter(eventId: number, session: ISession, voterName: string) {
     session.voters = session.voters.filter(voter => voter !== voterName);
     // no need of headers!
-    this.http.delete(`/api/events/${eventId}/sessions/${session.id}/voters/${voterName}`).catch(this.handleError).subscribe();
+    this.http
+      .delete(`/api/events/${eventId}/sessions/${session.id}/voters/${voterName}`)
+      .catch(this.handleError)
+      .subscribe();
   }
 
   addVoter(eventId: number, session: ISession, voterName: string) {
