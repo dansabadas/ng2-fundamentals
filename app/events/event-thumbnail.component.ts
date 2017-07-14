@@ -1,5 +1,5 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core'
-import { IEvent } from './shared/index'
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { IEvent } from './shared/index';
 
 @Component({
   selector: 'event-thumbnail',
@@ -39,22 +39,25 @@ import { IEvent } from './shared/index'
   `]
 })
 export class EventThumbnailComponent {
-  @Input() event:any;  // data comes passed from parent: [event]="event1" or whatever
-  @Output() eventClick = new EventEmitter();
-  someProperty: any = 'some string';
+  @Input() public event: any;  // data comes passed from parent: [event]="event1" or whatever
+  @Output() public eventClick = new EventEmitter();
+  public someProperty: any = 'some string';
 
-  handleClickMe(){
-    console.log('clicked: ' + this.event.name)
-    this.eventClick.emit(this.event.name)
+  public handleClickMe() {
+    console.log('clicked: ' + this.event.name);
+    this.eventClick.emit(this.event.name);
   }
 
-  logFoo(){
-      console.log('foo')
+  public logFoo() {
+      console.log('foo');
   }
 
-  getStartTimeStyle(): any {
-    if (this.event && this.event.time === '8:00 am')
-      return {color: '#003300', 'font-weight': 'bold'}
-    return {}
+  public getStartTimeStyle(): any {
+    if (this.event && this.event.time === '8:00 am') {
+        return {
+          'color': '#003300', 
+          'font-weight': 'bold'};
+      }
+    return {};
   }
 }

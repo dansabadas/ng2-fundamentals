@@ -1,6 +1,6 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core'
-import { FormControl, FormGroup, Validators } from '@angular/forms'
-import { ISession, restrictedWords } from '../shared/index'
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ISession, restrictedWords } from '../shared/index';
 
 @Component({
   selector: 'create-session',
@@ -15,21 +15,22 @@ import { ISession, restrictedWords } from '../shared/index'
   `]
 })
 export class CreateSessionComponent implements OnInit {
-  @Output() saveNewSession : EventEmitter<ISession> = new EventEmitter()
-  @Output() cancelAddSession = new EventEmitter()
-  newSessionForm: FormGroup
-  name: FormControl
-  presenter: FormControl
-  duration: FormControl
-  level: FormControl
-  abstract: FormControl
+  @Output() public saveNewSession: EventEmitter<ISession> = new EventEmitter();
+  @Output() public cancelAddSession = new EventEmitter();
+  private newSessionForm: FormGroup;
+  private name: FormControl;
+  private presenter: FormControl;
+  private duration: FormControl;
+  private level: FormControl;
+  private abstract: FormControl;
 
-  ngOnInit() {
-    this.name = new FormControl('', Validators.required)
-    this.presenter = new FormControl('', Validators.required)
-    this.duration = new FormControl('', Validators.required)
-    this.level = new FormControl('', Validators.required)
-    this.abstract = new FormControl('', [Validators.required, Validators.maxLength(400), restrictedWords(['foo', 'bar'])])
+  public ngOnInit() {
+    this.name = new FormControl('', Validators.required);
+    this.presenter = new FormControl('', Validators.required);
+    this.duration = new FormControl('', Validators.required);
+    this.level = new FormControl('', Validators.required);
+    this.abstract = new FormControl('', 
+    [Validators.required, Validators.maxLength(400), restrictedWords(['foo', 'bar'])]);
 
     this.newSessionForm = new FormGroup({
       name: this.name,
@@ -37,11 +38,11 @@ export class CreateSessionComponent implements OnInit {
       duration: this.duration,
       level: this.level,
       abstract: this.abstract
-    })
+    });
   }
 
-  saveSession(formValues) {
-    let session:ISession = {
+  private saveSession(formValues) {
+    const session: ISession = {
       id: undefined,
       name: formValues.name,
       duration: +formValues.duration,
@@ -49,12 +50,13 @@ export class CreateSessionComponent implements OnInit {
       presenter: formValues.presenter,
       abstract: formValues.abstract,
       voters: []
-    }
-    //console.log(session)
-    this.saveNewSession.emit(session)
+    };
+
+    // console.log(session)
+    this.saveNewSession.emit(session);
   }
 
-  cancelSession(){
+  private cancelSession() {
     this.cancelAddSession.emit();
   }
 }

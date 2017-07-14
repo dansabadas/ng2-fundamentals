@@ -1,8 +1,8 @@
-import { Component, OnInit, Inject } from '@angular/core'
-import { FormControl, FormGroup, Validators } from '@angular/forms'
-import { AuthService } from './auth.service'
-import { Router} from '@angular/router'
-import { TOASTR_TOKEN, Toastr} from '../common/toastr.service'
+import { Component, Inject, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router} from '@angular/router';
+import { Toastr, TOASTR_TOKEN} from '../common/toastr.service';
+import { AuthService } from './auth.service';
 
 @Component({
   templateUrl: 'app/user/profile.component.html',
@@ -16,49 +16,49 @@ import { TOASTR_TOKEN, Toastr} from '../common/toastr.service'
   `]
 })
 export class ProfileComponent implements OnInit {
-  profileForm:FormGroup
-  private firstName:FormControl
-  private lastName:FormControl
+  public profileForm: FormGroup;
+  private firstName: FormControl;
+  private lastName: FormControl;
 
-  constructor(private router:Router, private authService:AuthService, 
-    @Inject(TOASTR_TOKEN) private toastr: Toastr) { // this type of injection is only for typescript services
+  constructor(private router: Router, private authService: AuthService, 
+              @Inject(TOASTR_TOKEN) private toastr: Toastr) { // this type of injection is only for typescript services
 
   }
 
-  ngOnInit() {
-    this.firstName = new FormControl(this.authService.currentUser.firstName, [Validators.required, Validators.pattern('[a-zA-Z].*')])
-    this.lastName = new FormControl(this.authService.currentUser.lastName, Validators.required)
+  public ngOnInit() {
+    this.firstName = new FormControl(this.authService.currentUser.firstName,
+      [Validators.required, Validators.pattern('[a-zA-Z].*')]);
+    this.lastName = new FormControl(this.authService.currentUser.lastName, Validators.required);
 
     this.profileForm = new FormGroup({
       firstName: this.firstName,  // it must match what we have on HTML: formControlName="firstName"
       lastName: this.lastName
-    })
+    });
   }
 
-  saveProfile(formValues) {
+  public saveProfile(formValues) {
     if(this.profileForm.valid) {
       this.authService.updateCurrentUser(formValues.firstName, formValues.lastName).subscribe(() => {
         this.toastr.success('Profile Saved');
-      })
+      });
     }
   }
 
-  logout() {
+  private logout() {
     this.authService.logout().subscribe(() => {
       this.router.navigate(['/user/login']);
-    })
+    });
   }
 
-  validateFirstName() {
-    return this.firstName.valid || this.firstName.untouched
+  private validateFirstName() {
+    return this.firstName.valid || this.firstName.untouched;
   }
   
-  validateLastName() {
-    return this.lastName.valid || this.lastName.untouched
+  private validateLastName() {
+    return this.lastName.valid || this.lastName.untouched;
   }
 
-  cancel() {
-    this.router.navigate(['events'])
-  }
-       
+  private cancel() {
+    this.router.navigate(['events']);
+  } 
 }

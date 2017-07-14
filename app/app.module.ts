@@ -1,42 +1,42 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule, ActivatedRouteSnapshot } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http'
+import { HttpModule } from '@angular/http';
+import { BrowserModule } from '@angular/platform-browser';
+import { ActivatedRouteSnapshot, RouterModule } from '@angular/router';
 
 import {
-    EventsListComponent,
-    EventThumbnailComponent,
-    EventDetailsComponent,
     CreateEventComponent,
-    EventService,
-    EventsListResolver,
-    EventResolver,
     CreateSessionComponent,
-    SessionListComponent,
     DurationPipe,
+    EventDetailsComponent,
+    EventResolver,
+    EventService,
+    EventsListComponent,
+    EventsListResolver,
+    EventThumbnailComponent,
+    LocationValidator,
+    SessionListComponent,
     UpvoteComponent,
-    VoterService,
-    LocationValidator
+    VoterService
 } from './events/index';
 
 import { 
-    JQ_TOKEN,
-    TOASTR_TOKEN, 
-    Toastr,
     CollapsibleWellComponent,
+    JQ_TOKEN, 
+    ModalTriggerDirective,
     SimpleModalComponent,
-    ModalTriggerDirective 
+    Toastr,
+    TOASTR_TOKEN 
 } from './common/index';
 
-import { Error404Component } from './errors/404.component'
+import { Error404Component } from './errors/404.component';
 import { EventsAppComponent } from './events-app.component';
 import { NavBarComponent } from './nav/navbar.component';
-import { appRoutes} from './routes'
-import { AuthService } from './user/auth.service'
+import { appRoutes} from './routes';
+import { AuthService } from './user/auth.service';
 
-declare let toastr : Toastr;  // this way we declare toastr is on the global scope
-declare let jQuery : Object; 
+declare let toastr: Toastr;  // this way we declare toastr is on the global scope
+declare let jQuery: Object; 
 
 @NgModule({
     imports: [
@@ -73,14 +73,15 @@ declare let jQuery : Object;
         { provide: 'canDeactivateCreateEvent', useValue: checkDirtyState },
         AuthService,
         VoterService
-        //{ provide: 'canDeactivateClickThumbnail', useValue: false }
+        // { provide: 'canDeactivateClickThumbnail', useValue: false }
     ],
     bootstrap:[EventsAppComponent]
 })
 export class AppModule { }
 
-function checkDirtyState(component:CreateEventComponent) {
-  if (component.isDirty)
-    return window.confirm('You have not saved this event, do you really want to cancel?')
-  return true
+function checkDirtyState(component: CreateEventComponent) {
+  if (component.isDirty) {
+        return window.confirm('You have not saved this event, do you really want to cancel?');
+    }
+  return true;
 }
