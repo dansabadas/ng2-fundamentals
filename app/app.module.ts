@@ -3,6 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { ActivatedRouteSnapshot, RouterModule } from '@angular/router';
+import './rxjs-extensions';
 
 import {
     CreateEventComponent,

@@ -1,4 +1,4 @@
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs/Rx'; // for some strange reason it does not work referencing 'rxjs/Observale'
 import { ISession } from '../shared/session.model';
 import { VoterService } from './voter.service';
 
